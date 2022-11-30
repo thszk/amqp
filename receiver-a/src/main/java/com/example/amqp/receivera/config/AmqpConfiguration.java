@@ -3,7 +3,7 @@ package com.example.amqp.receivera.config;
 import com.example.amqp.receivera.domain.constant.ReceiverAConstant;
 import org.springframework.amqp.core.Binding;
 import org.springframework.amqp.core.BindingBuilder;
-import org.springframework.amqp.core.FanoutExchange;
+import org.springframework.amqp.core.DirectExchange;
 import org.springframework.amqp.core.Queue;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -12,8 +12,8 @@ import org.springframework.context.annotation.Configuration;
 public class AmqpConfiguration {
 
     @Bean
-    public FanoutExchange createFanoutExchange() {
-        return new FanoutExchange(ReceiverAConstant.EXCHANGE_FANOUT_HELLO);
+    public DirectExchange createFanoutExchange() {
+        return new DirectExchange(ReceiverAConstant.EXCHANGE_HELLO);
     }
 
     @Bean
@@ -22,8 +22,8 @@ public class AmqpConfiguration {
     }
 
     @Bean
-    public Binding createBinding(FanoutExchange fanoutExchange, Queue queue) {
-        return BindingBuilder.bind(queue).to(fanoutExchange);
+    public Binding createBinding(DirectExchange directExchange, Queue queue) {
+        return BindingBuilder.bind(queue).to(directExchange).with(ReceiverAConstant.ROUTING_KEY);
     }
 
 }

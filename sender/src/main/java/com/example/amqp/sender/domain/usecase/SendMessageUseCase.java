@@ -24,8 +24,8 @@ public class SendMessageUseCase {
         } catch (JsonProcessingException e) {
             throw new MessageConversionException(e);
         }
-        rabbitTemplate.convertAndSend(SenderConstant.EXCHANGE_FANOUT_HELLO, "", message);
-        log.info("Enviado a mensagem '{}' para o exchange '{}'", message, SenderConstant.EXCHANGE_FANOUT_HELLO);
+        rabbitTemplate.convertAndSend(SenderConstant.EXCHANGE_HELLO, input.getTo(), message);
+        log.info("Enviado a mensagem '{}' para o exchange '{}'", message, SenderConstant.EXCHANGE_HELLO);
     }
 
 }
