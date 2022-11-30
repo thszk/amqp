@@ -17,14 +17,16 @@ public class ConsumeQueueHelloUseCase {
     ObjectMapper objectMapper;
 
     public void consume(String message) {
-        log.info("Recebido a mensagem '{}' da queue '{}'", message, ReceiverBConstant.QUEUE_HELLO);
         ConsumeQueueHelloUseCaseInput input;
         try {
             input = objectMapper.readValue(message, ConsumeQueueHelloUseCaseInput.class);
         } catch (JsonProcessingException e) {
             throw new MessageConversionException(e);
         }
-        log.info("Mensagem convertida '{}'", input);
+        if (ReceiverBConstant.RECEIVER_NAME.equals(input.getTo())) {
+            log.info("Recebido a mensagem '{}' da queue '{}'", message, ReceiverBConstant.QUEUE_HELLO);
+            log.info("Mensagem convertida '{}'", input);
+        }
     }
 
 }
